@@ -15,21 +15,21 @@ export class WalletAssetsService {
                     select: {
                         id: true,
                         symbol: true,
-                        price: true
+                        price: true,
                     },
                 },
             },
         });
     }
+
     create(input: { wallet_id: string; asset_id: string; shares: number; }) {
         return this.prismaService.walletAsset.create({
             data: {
                 wallet_id: input.wallet_id,
                 asset_id: input.asset_id,
                 shares: input.shares,
-                amount: 10
+                amount: 10,
             },
         });
     }
 }
-
