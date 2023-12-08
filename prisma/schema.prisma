@@ -28,16 +28,16 @@ model Wallet {
 
 model WalletAsset {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  Wallet    Wallet   @relation(fields: [wallet_Id], references: [id])
-  wallet_Id  String
-  Asset     Asset    @relation(fields: [asset_Id], references: [id])
-  asset_Id   String
+  Wallet    Wallet   @relation(fields: [wallet_id], references: [id])
+  wallet_id  String
+  Asset     Asset    @relation(fields: [asset_id], references: [id])
+  asset_id   String
   amount    Float
   shares Int @db.Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
 
-  @@unique([wallet_Id,asset_Id])
+  @@unique([wallet_id,asset_id])
 }
 
