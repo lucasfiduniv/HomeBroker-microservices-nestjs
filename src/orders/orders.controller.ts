@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { OrdersService } from './orders.service';
-import { InitTransactionDto } from './dto/order.dto';
+import { InitTransactionDto, executeTransactionDto } from './dto/order.dto';
 
 @Controller('orders')
 export class OrdersController {
@@ -9,5 +9,10 @@ export class OrdersController {
   @Post()
   initTransaction(@Body() body: InitTransactionDto) {
     return this.ordersService.startTransaction(body);
+  }
+
+  @Post('execute')
+  executeTransaction(@Body() body: executeTransactionDto) {
+    return this.ordersService.executeTransaction(body);
   }
 }
