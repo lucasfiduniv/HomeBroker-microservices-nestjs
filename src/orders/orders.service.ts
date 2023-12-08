@@ -4,11 +4,31 @@ import {
   InitTransactionDto,
   executeTransactionDto,
 } from '../orders/dto/order.dto';
-import { OrderStatus } from '@prisma/client';
+import { OrderStatus, OrdersType } from '@prisma/client';
 
 @Injectable()
 export class OrdersService {
   constructor(private prismaService: PrismaService) {}
+
+  all(filter: { wallet_id: string }) {
+    return this.prismaService.orders.findMany({
+      where: {
+        wallet_id: filter.wallet_id,
+      },
+      include: {
+        Transactions: true,
+        Asset: {
+          select: {
+            id: true,
+            symbol: true,
+          },
+        },
+      },
+      orderBy: {
+        updatedAt: 'desc',
+      },
+    });
+  }
 
   startTransaction(input: InitTransactionDto) {
     return this.prismaService.orders.create({
@@ -68,7 +88,10 @@ export class OrdersService {
               },
             },
             data: {
-              shares: walletAsset.shares + input.negotiated_share,
+              shares:
+                order.type === OrdersType.BUY
+                  ? walletAsset.shares + input.negotiated_share
+                  : walletAsset.shares - input.negotiated_share,
             },
           });
         } else {
