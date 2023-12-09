@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["extendedWhereUnique"]
 }
 
 datasource db {
@@ -11,74 +12,74 @@ datasource db {
 }
 
 model Asset {
-  id        String   @id @map("_id")
-  symbol    String
-  price     Float
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String        @id @map("_id")
+  symbol       String
+  price        Float
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
   WalletAssets WalletAsset[]
-  orders Orders[]
+  orders       Orders[]
 }
 
 model Wallet {
-  id        String   @id @map("_id")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String        @id @map("_id")
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
   WalletAssets WalletAsset[]
-  orders Orders[]
+  orders       Orders[]
 }
 
 model WalletAsset {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   Wallet    Wallet   @relation(fields: [wallet_id], references: [id])
-  wallet_id  String
+  wallet_id String
   Asset     Asset    @relation(fields: [asset_id], references: [id])
-  asset_id   String
-  shares Int @db.Int
+  asset_id  String
+  shares    Int      @db.Int
+  version   Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-
-  @@unique([wallet_id,asset_id])
+  @@unique([wallet_id, asset_id])
 }
 
 model Orders {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  Wallet    Wallet   @relation(fields: [wallet_id], references: [id])
-  wallet_id String 
-  Asset     Asset    @relation(fields: [asset_id], references: [id])
-  asset_id   String
-  shares Int @db.Int
-  price Float
-  type OrdersType
-  status OrderStatus
-  partial Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  Wallet       Wallet        @relation(fields: [wallet_id], references: [id])
+  wallet_id    String
+  Asset        Asset         @relation(fields: [asset_id], references: [id])
+  asset_id     String
+  shares       Int           @db.Int
+  price        Float
+  type         OrdersType
+  status       OrderStatus
+  partial      Int
+  version      Int
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
   Transactions Transaction[]
-
 }
 
-  enum OrdersType {
-    BUY
-    SHELL
+enum OrdersType {
+  BUY
+  SHELL
 }
+
 enum OrderStatus {
-      PENDING
-      OPEN
-      CLOSED
-      FAILED
+  PENDING
+  OPEN
+  CLOSED
+  FAILED
 }
 
 model Transaction {
-    id        String   @id @default(auto()) @map("_id") @db.ObjectId
-    Order  Orders   @relation(fields: [order_id], references: [id])
-    order_id String @db.ObjectId
-    broker_transaction_id String
-    related_invest_id String
-    shares Int @db.Int
-    price Float
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
+  id                    String   @id @default(auto()) @map("_id") @db.ObjectId
+  Order                 Orders   @relation(fields: [order_id], references: [id])
+  order_id              String   @db.ObjectId
+  broker_transaction_id String
+  related_invest_id     String
+  shares                Int      @db.Int
+  price                 Float
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
 }
