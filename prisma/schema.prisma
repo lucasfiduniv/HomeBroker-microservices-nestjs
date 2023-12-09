@@ -3,7 +3,6 @@
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["extendedWhereUnique"]
 }
 
 datasource db {
@@ -36,7 +35,7 @@ model WalletAsset {
   Asset     Asset    @relation(fields: [asset_id], references: [id])
   asset_id  String
   shares    Int      @db.Int
-  version   Int
+  version   Int?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -54,7 +53,7 @@ model Orders {
   type         OrdersType
   status       OrderStatus
   partial      Int
-  version      Int
+  version      Int?
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   Transactions Transaction[]
