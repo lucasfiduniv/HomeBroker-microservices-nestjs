@@ -7,6 +7,8 @@ services:
       - "3000:3000"
     volumes:
       - "C:/Users/Lucas Fiduniv/Documents/GitHub/sistema-microservices:/home/node/app"
+    extra_hosts:
+    - "host.docker.internal:192.168.1.6"
 
   db:
     image: bitnami/mongodb:5.0.17
