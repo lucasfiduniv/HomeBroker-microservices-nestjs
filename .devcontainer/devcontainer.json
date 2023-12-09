@@ -8,7 +8,7 @@
 
 	"service": "app",
 
-	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"workspaceFolder": "/home/node/app${localWorkspaceFolderBasename}",
 
 	"features": {
 		"ghcr.io/devcontainers/features/common-utils:2": {},
@@ -19,7 +19,10 @@
 		"vscode": {
 			"extensions": [
 				"VisualStudioExptTeam.intellicode-api-usage-examples",
-				"Prisma.prisma"
+				"Prisma.prisma",
+				"VisualStudioExptTeam.vscodeintellicode",
+				"dbaeumer.vscode-eslint",
+				"TabNine.tabnine-vscode"
 			]
 		}
 	}

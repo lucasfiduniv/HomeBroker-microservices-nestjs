@@ -18,10 +18,7 @@ export class OrdersController {
   }
 
   @Post('execute')
-  executeTransaction(@Body() body: executeTransactionDto) {
+  executeTransaction(@Body() body: Omit<executeTransactionDto, 'wallet_id'>) {
     return this.ordersService.executeTransaction(body);
   }
-
-  @Get()
-  all;
 }
