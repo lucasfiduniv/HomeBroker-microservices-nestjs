@@ -90,8 +90,8 @@ export class OrdersService {
             data: {
               shares:
                 order.type === OrdersType.BUY
-                  ? walletAsset.shares + input.negotiated_share
-                  : walletAsset.shares - input.negotiated_share,
+                  ? walletAsset.shares + order.shares
+                  : walletAsset.shares - order.shares,
             },
           });
         } else {
